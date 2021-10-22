@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 // import { Redirect } from 'react-router';
+import axios from "axios";
 import { Link } from 'react-router-dom';
 import './Login.css';
 
@@ -30,31 +31,63 @@ class Login extends Component {
   }
 
   submitForm(e) {
-
     e.preventDefault();
+
+    let history = this.props;
 
     if (this.validateForm()) {
         let details = {};
         details["emailid"] = "";
         details["password"] = "";
-        fetch("http://localhost:5000/api/auth/login" , {
-          method : "post", 
-          body :{
-            "email"  : details["emailid"],
-            "password" : details["password"]
-          }
-        }).then(res=>{
-          if(res.status === 200 || res.status  === 201){
-            this.setState({details:details});
-            alert("You have been logged in successfully!"); 
-            this.setState({redirect: true});
-          }
-          else{
-            alert(res.statusText);
-          }
-        }).catch( err =>{
+
+        if (localStorage.getItem("authToken")) {
+          history.push("/");
+        }
+
+        const config = {
+          header: {
+            "Content-Type": "application/json",
+          },
+        };
+
+        try {
+          const {data} = await axios.post(
+            "/api/auth/login",
+            config,
+            {
+              "email"  : details["emailid"],
+              "password" : details["password"]
+            }
+          );
+
+          localStorage.setItem("authToken", data.token);
+
+          history.push("/");
+        } catch(error) {
           alert(err);
-        }) 
+        }
+
+        // fetch("http://localhost:5000/api/auth/login" , {
+        //   method : "post",
+        //   header: {
+        //     "Content-Type": "application/json",
+        //   }, 
+        //   body :{
+        //     "email"  : details["emailid"],
+        //     "password" : details["password"]
+        //   }
+        // }).then(res=>{
+        //   if(res.status === 200 || res.status  === 201){
+        //     this.setState({details:details});
+        //     alert("You have been logged in successfully!"); 
+        //     this.setState({redirect: true});
+        //   }
+        //   else{
+        //     alert(res.statusText);
+        //   }
+        // }).catch( err =>{
+        //   alert(err);
+        // }) 
       }
 
   }

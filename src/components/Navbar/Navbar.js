@@ -26,7 +26,7 @@ const Navbar = () => {
 
                 <ul className="navbar-nav mr-auto">
                 <li className="nav-item">
-                    <Link className="nav-link" to="/">Login</Link>
+                    <Link className="nav-link" to="/login">Login</Link>
                 </li>
                 <li className="nav-item">
                     <Link className="nav-link" to="/register">Register</Link>
