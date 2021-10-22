@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 // import { Redirect } from 'react-router';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import '../Login/Login.css';
 
@@ -32,6 +33,8 @@ class Register extends Component {
 
     e.preventDefault();
 
+    let history = this.props;
+
     if (this.validateForm()) {
         let details = {};
         details["name"] = "";
@@ -44,28 +47,56 @@ class Register extends Component {
         details["techstack"] = "";
         details["tags"] = "";
 
-        fetch("http://localhost:5000/api/auth/register" , {
-          method : "post", 
-          body :{
-            "name" : details["name"],
-            "username" : details["username"],
-            "email"  : details["emailid"],
-            "password" : details["password"],
-            "github" : details["github"],
-            "techsatck" : details["techstack"],
-            "tags" : details["tags"]
-          }
-        }).then(res=>{
-          if(res.status === 200 || res.status  === 201){
-            this.setState({details:details});
-            alert("You have been logged in successfully!"); 
-          }
-          else{
-            alert(res.statusText);
-          }
-        }).catch( err =>{
-          alert(err);
-        })
+        const config = {
+          header: {
+            "Content-Type": "application/json",
+          },
+        };
+
+        try {
+          const { data } = await axios.post(
+            "/api/auth/register",
+            {
+              "name" : details["name"],
+              "username" : details["username"],
+              "email"  : details["emailid"],
+              "password" : details["password"],
+              "github" : details["github"],
+              "techstack" : details["techstack"],
+              "tags" : details["tags"]
+            },
+            config
+          );
+    
+          localStorage.setItem("authToken", data.token);
+    
+          history.push("/");
+        } catch (error) {
+          alert(error);
+        }
+
+        // fetch("http://localhost:5000/api/auth/register" , {
+        //   method : "post", 
+        //   body :{
+            // "name" : details["name"],
+            // "username" : details["username"],
+            // "email"  : details["emailid"],
+            // "password" : details["password"],
+            // "github" : details["github"],
+            // "techsatck" : details["techstack"],
+            // "tags" : details["tags"]
+          // }
+        // }).then(res=>{
+        //   if(res.status === 200 || res.status  === 201){
+        //     this.setState({details:details});
+        //     alert("You have been logged in successfully!"); 
+        //   }
+        //   else{
+        //     alert(res.statusText);
+        //   }
+        // }).catch( err =>{
+        //   alert(err);
+        // })
       }
 
   }
@@ -138,19 +169,19 @@ class Register extends Component {
       }
     }
 
-    if (!details["linkedin"]) {
-      validity = false;
-      errors["linkedin"] = "*Please enter your Linkedin account URL";
-    }
+    // if (!details["linkedin"]) {
+    //   validity = false;
+    //   errors["linkedin"] = "*Please enter your Linkedin account URL";
+    // }
 
-    if (typeof details["linkedin"] !== "undefined") {
+    // if (typeof details["linkedin"] !== "undefined") {
 
-      let pattern = new RegExp(/(https?)?:?(\/\/)?(([w]{3}||\w\w)\.)?linkedin.com(\w+:{0,1}\w*@)?(\S+)(:([0-9])+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/);
-      if (!pattern.test(details["linkedin"])) {
-        validity = false;
-        errors["linkedin"] = "*Please enter a valid Linkedin account";
-      }
-    }
+    //   let pattern = new RegExp(/(https?)?:?(\/\/)?(([w]{3}||\w\w)\.)?linkedin.com(\w+:{0,1}\w*@)?(\S+)(:([0-9])+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/);
+    //   if (!pattern.test(details["linkedin"])) {
+    //     validity = false;
+    //     errors["linkedin"] = "*Please enter a valid Linkedin account";
+    //   }
+    // }
 
     if (!details["github"]) {
       validity = false;
@@ -283,13 +314,13 @@ render() {
                 <textarea type="tags" 
                 name = "tags" 
                 value={this.state.details.tags} 
-                placeholder="Eg . JavaScript , ptyhon , Etc.." 
+                placeholder="Eg . JavaScript , Python , Etc.." 
                 onChange={this.handleChange} />
                 <small className="errorMsg">{this.state.errors.tags}</small>
             </div>
 
             <div className="control">
-              <span>Already have an Account?  <Link to='/' className="register-link">Login</Link></span>
+              <span>Already have an Account?  <Link to='/login' className="register-link">Login</Link></span>
             </div>
 
             <input type="submit" className="button2"  value="Register" />
@@ -298,9 +329,9 @@ render() {
   </div>
 
     );
+  }
 }
 
-}
 
 
 export default Register;
