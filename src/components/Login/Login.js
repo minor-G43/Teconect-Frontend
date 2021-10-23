@@ -30,19 +30,22 @@ class Login extends Component {
 
   }
 
-  submitForm(e) {
+  async submitForm(e) {
     e.preventDefault();
-
-    let history = this.props;
 
     if (this.validateForm()) {
         let details = {};
         details["emailid"] = "";
         details["password"] = "";
 
-        if (localStorage.getItem("authToken")) {
-          history.push("/");
-        }
+      //   if (localStorage.getItem("authToken")!=null && localStorage.getItem("authToken")!="") {
+      //     // history.push("/");
+      //     const loginToken = await axios.post(`https://tconectapi.herokuapp.com/api/auth/login/${data.token}`);
+      //     if(loginToken.success==true) {
+      //       // localStorage.setItem("authToken", data.token);
+      //       <Redirect to='/users' />
+      //   }
+      // }
 
         const config = {
           header: {
@@ -52,7 +55,7 @@ class Login extends Component {
 
         try {
           const {data} = await axios.post(
-            "/api/auth/login",
+            "https://tconectapi.herokuapp.com/api/auth/login",
             config,
             {
               "email"  : details["emailid"],
@@ -62,8 +65,8 @@ class Login extends Component {
 
           localStorage.setItem("authToken", data.token);
 
-          history.push("/");
-        } catch(error) {
+          // history.push("/");
+        } catch(err) {
           alert(err);
         }
 
