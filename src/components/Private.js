@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { Redirect } from 'react-router';
 import axios from "axios";
 
 const Private = () => {
@@ -8,16 +9,21 @@ const Private = () => {
 
   useEffect(() => {
     const fetchPrivateDate = async () => {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-        },
-      };
+      // const config = {
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      //   },
+      // };
 
       try {
-        const { data } = await axios.get("/api/private", config);
-        setPrivateData(data.data);
+        if(localStorage.getItem("authToken")!==null && localStorage.getItem("authToken")!=="") {
+          const loginToken = await axios.post(`https://tconectapi.herokuapp.com/api/auth/login/${localStorage.getItem("authToken")}`);
+          if(loginToken.success===true) {
+            // localStorage.setItem("authToken", localStorage.getItem("authToken"));
+            <Redirect to='/users' />
+          }
+        }
       } catch (error) {
         localStorage.removeItem("authToken");
         setError("You are not authorized please login");
