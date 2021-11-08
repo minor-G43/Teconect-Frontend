@@ -170,6 +170,10 @@ render() {
               <span>Don't have an Account?  <Link to='/register' className="register-link">Register</Link></span>
             </div>
 
+            <div className="control">
+              <span><Link to='/forgotpassword' className="forgot-link">Forgot Password?</Link></span>
+            </div>
+
             <input type="submit" className="button"  value="Login" />
         </form>
     </div>
