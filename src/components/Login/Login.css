@@ -1,4 +1,4 @@
-.login, .register {
+.login, .register, .forgotpassword {
     background: linear-gradient(rgba(255,255,255,0.05), rgba(255,255,255,0.05)), url('../../images/background.png') center/cover no-repeat fixed;
     display: flex;
     align-items: center;
@@ -77,16 +77,24 @@
     color: white;
   }
 
-  .register-link {
+  .register-link, .forgot-link {
     color: yellow;
     transition: all 1s linear;
+  }
+
+  .forgot-link {
+    text-decoration: underline;
   }
 
   .register-link:hover {
     color: #fff;
   }
+
+  .forgot-link:hover {
+    color: darkblue;
+  }
     
-  .button, .button2 {
+  .button, .button2, .button3 {
     cursor: pointer;
     text-align: center;
     border-radius: 4px;
@@ -96,6 +104,11 @@
     color: #3F0071;
     border-radius: 25px;
     margin-left: 85px;
+    }
+
+    .button3 {
+      padding: 12px 80px;
+      margin-left: 63px;
     }
   
     .button:hover {
@@ -115,5 +128,10 @@
 
       .button2 {
         margin-left: 41px;
+      }
+
+      .button3 {
+        margin-left: 12px;
+        padding: 12px 65px;
       }
     }
