@@ -20,6 +20,7 @@ const App = () => {
         <Route path='/users' component={Users} />
         <Route path='/forgotpassword' component={ForgotPassword} />
         <Route path='/resetpassword' component={ResetPassword} />
+        <Route path='/forgotpassword/:token' component={ForgotPassword} />
       </Switch>
     </Router>
     </div>
