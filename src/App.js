@@ -17,7 +17,7 @@ const App = () => {
         <Route path='/login' exact component={Login} />
         <Route path='/register' component={Register} />
         <Route path='/users' component={Users} />
-        <Route path='/forgotpassword' component={ForgotPassword} />
+        <Route path='/forgotpassword/:token' component={ForgotPassword} />
       </Switch>
     </Router>
     </div>
