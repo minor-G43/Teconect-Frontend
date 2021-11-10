@@ -7,8 +7,8 @@ import '../Login/Login.css';
 
 class ForgotPassword extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       details: {},
@@ -35,8 +35,7 @@ class ForgotPassword extends Component {
 
     if (this.validateForm()) {
         let details = {};
-        details["password"] = "";
-        details["confirmpassword"] = "";
+        details["emailid"] = "";
 
         const config = {
           header: {
@@ -49,8 +48,7 @@ class ForgotPassword extends Component {
             "https://tconectapi.herokuapp.com/api/auth/forgotpassword",
             config,
             {
-              "password" : details["password"],
-              "confirmpassword" : details["confirmpassword"]
+              "email" : details["emailid"],
             }
           );
 
@@ -69,29 +67,19 @@ class ForgotPassword extends Component {
     let errors = {};
     let validity = true;
 
-    if (!details["password"]) {
+    if (!details["emailid"]) {
       validity = false;
-      errors["password"] = "*Please enter a Password";
+      errors["emailid"] = "*Please enter your Email ID";
     }
 
-    if (typeof details["password"] !== "undefined") {
-      if (!(details["password"].length > 6)) {
+    if (typeof details["emailid"] !== "undefined") {
+
+      let pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+      if (!pattern.test(details["emailid"])) {
         validity = false;
-        errors["password"] = "*Please enter more than 6 characters";
+        errors["emailid"] = "*Please enter valid Email ID";
       }
     }
-
-    if (!details["confirmpassword"]) {
-        validity = false;
-        errors["confirmpassword"] = "*Please enter your Confirm Password";
-      }
-  
-      if (typeof details["confirmpassword"] !== "undefined") {
-        if (!(details["password"] === details["confirmpassword"])) {
-          validity = false;
-          errors["confirmpassword"] = "*Passwords do not match";
-        }
-      }
 
     this.setState({
       errors: errors
@@ -110,29 +98,19 @@ render() {
 
         <form className="form" method="post" name="Forgot-Password" onSubmit= {this.submitForm}>
 
-            <h2>Change Password</h2>
+            <h2>Reset Password</h2>
 
             <div className="control">
-                <label htmlFor = "password">Enter New Password</label>
-                <input type="password" 
-                name = "password" 
-                value={this.state.details.password} 
-                placeholder="Enter Password" 
+                <label htmlFor = "email">Email</label>
+                <input type="text" 
+                name = "emailid" 
+                value={this.state.details.emailid}  
+                placeholder="Enter Email" 
                 onChange={this.handleChange} />
-                <small className="errorMsg">{this.state.errors.password}</small>
+                <small className="errorMsg">{this.state.errors.emailid}</small>
             </div>
 
-            <div className="control">
-                <label htmlFor = "confirmpassword">Confirm New Password</label>
-                <input type="password" 
-                name = "confirmpassword" 
-                value={this.state.details.confirmpassword} 
-                placeholder="Enter Your Confirm Password" 
-                onChange={this.handleChange} />
-                <small className="errorMsg">{this.state.errors.confirmpassword}</small>
-            </div>
-
-            <input type="submit" className="button3"  value="Change Password" />
+            <input type="submit" className="button3"  value="Reset Password" />
         </form>
     </div>
   </div>

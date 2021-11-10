@@ -8,8 +8,8 @@ import '../Login/Login.css';
 
 class Register extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       details: {},
@@ -41,7 +41,7 @@ class Register extends Component {
         details["username"] = "";
         details["emailid"] = "";
         details["password"] = "";
-        details["confirmpassword"] = "";
+        // details["confirmpassword"] = "";
         details["phoneno"] = "";
         // details["linkedin"] = "";
         details["github"] = "";
@@ -57,13 +57,14 @@ class Register extends Component {
         };
 
         try {
+          console.log(details);
           const { data } = await axios.post(
             "https://tconectapi.herokuapp.com/api/auth/register",
             {
               "username" : details["username"],
               "email"  : details["emailid"],
               "password" : details["password"],
-              "phoneno" : details["phoneno"],
+              "PhoneNo" : details["phoneno"],
               "github" : details["github"],
               "techstack" : details["techstack"],
               "tags" : details["tags"],
@@ -73,17 +74,17 @@ class Register extends Component {
             config
           );
   
-          if(data.success === true) {
-            const loginToken = await axios.post(`https://tconectapi.herokuapp.com/api/auth/login/${data.token}`);
-            if(loginToken.success===true) {
-              localStorage.setItem("authToken", data.token);
-              <Redirect to='/users' />
-            }
-          }
+          // if(data.success === true) {
+          //   const loginToken = await axios.post(`https://tconectapi.herokuapp.com/api/auth/login/${data.token}`);
+          //   if(loginToken.success===true) {
+          //     localStorage.setItem("authToken", data.token);
+          //     <Redirect to='/users' />
+          //   }
+          // }
     
           // history.push("/");
         } catch (error) {
-          alert(error);
+          console.log(error);
         }
 
         // fetch("http://localhost:5000/api/auth/register" , {
