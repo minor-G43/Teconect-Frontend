@@ -1,0 +1,54 @@
+.profile {
+  min-height: 100vh;
+  background: linear-gradient(rgba(191, 155, 1905,0.5), rgba(191, 155, 190,0.5)), url('../../images/pic2.jpg') center/cover no-repeat fixed;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  color: white;
+  font-family: 'Electrolize', sans-serif;
+}
+
+.details {  
+  margin-top: 100px;
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8));
+  padding: 69px 150px;
+  border-radius: 50px; 
+}
+
+.details-container {
+  margin-top: 60px;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  grid-template-rows: repeat(3,1fr);
+  row-gap: 50px;
+  column-gap: 30px;
+}
+
+.detail {
+  font-size: 20px;
+  font-weight: bold;
+  width: 207px;
+}
+
+.user-image {
+  border-radius: 90px;
+  height: 166px;
+  width: 177px;
+}
+
+@media screen and (max-width: 960px) {
+
+  .details {
+    padding: 69px 58px;
+  }
+  .details-container {
+    column-gap: 0px;
+    row-gap: 20px;
+  }
+
+  .detail {
+    font-size: 10px;
+    font-weight: bold;
+    width: 99px;
+  }
+}
