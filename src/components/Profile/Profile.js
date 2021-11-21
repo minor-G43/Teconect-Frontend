@@ -15,7 +15,7 @@ const Profile = async () => {
     useEffect(() => {
         async function getData() {
             if(localStorage.getItem("authToken")!==null && localStorage.getItem("authToken")!=="") {
-                const res = await axios.get(`https://tconectapi.herokuapp.com/api/auth/fetchprofile/${localStorage.getItem("authToken")}`);
+                const res = await axios.post(`https://tconectapi.herokuapp.com/api/auth/fetchprofile/${localStorage.getItem("authToken")}`);
                 setUsername(res.data.username);
                 setEmail(res.data.email);
                 setGithub(res.data.github);

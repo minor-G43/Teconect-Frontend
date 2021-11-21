@@ -12,7 +12,7 @@ const Users = () => {
     const [users,setUsers] = useState([]);
     
     const getUsers = async () => {
-        const res = await axios.get('https://tconectapi.herokuapp.com/api/auth/fetchprofile');
+        const res = await axios.post('https://tconectapi.herokuapp.com/api/auth/fetchprofile');
         setUsers(res);
     }
 
