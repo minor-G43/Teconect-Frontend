@@ -1,11 +1,10 @@
 import React, {useEffect,useState} from 'react';
-import socketIOClient from "socket.io-client";
 import Aos from 'aos';
 import 'aos/dist/aos.css';
-import user from '../../images/user.jpg';
+import randomColor from "randomcolor";
+import userPic from '../../images/user.jpg';
 import './Users.css';
 import axios from 'axios';
-const ENDPOINT = "http://127.0.0.1:4001";
 
 const Users = () => {
 
@@ -25,11 +24,11 @@ const Users = () => {
         <div className="users">
             <div className="users-list">
 
-                {
+                {/* {
                     users.map(user => {
                         return (
-                            <div data-aos="fade-up" className="user" id={user.token}>
-                            <img src={user} alt="user" className="users-img" />
+                            <div data-aos="fade-up" className="user" id={user._id}>
+                            <img src={userPic} alt="user" className="users-img" />
                             <div className="users-container">
                                 <div className="user-detail">Name</div>
                                 <div className="user-detail">:</div>
@@ -55,12 +54,12 @@ const Users = () => {
 
                         )
                     })
-                }
+                } */}
 
 
 
-                {/* <div data-aos="fade-up" className="user">
-                <img src={user} alt="user" className="users-img" />
+                <div data-aos="fade-up" className="user">
+                <img src={userPic} alt="user" className="users-img" />
                 <div className="users-container">
                     <div className="user-detail">Name</div>
                     <div className="user-detail">:</div>
@@ -76,7 +75,30 @@ const Users = () => {
                     <div className="user-detail">Web Development</div>
                     <div className="user-detail">Preferred Technologies</div>
                     <div className="user-detail">:</div>
-                    <div className="user-detail">Javascript, React</div>
+                    <div className="user-detail"><span className="tag" style={{
+                                        backgroundColor: randomColor(),
+                                        padding: "6px",
+                                        fontWeight: 'bold',
+                                        borderRadius: "5px"
+                                    }}>
+                                        Javascript</span><span className="tag-space"></span>
+                                        
+                                        <span className="tag" style={{
+                                        backgroundColor: randomColor(),
+                                        padding: "6px",
+                                        fontWeight: 'bold',
+                                        borderRadius: "5px"
+                                    }}>
+                                        React</span><span className="tag-space"></span>
+
+                                        <span className="tag" style={{
+                                        backgroundColor: randomColor(),
+                                        padding: "6px",
+                                        fontWeight: 'bold',
+                                        borderRadius: "5px"
+                                    }}>
+                                        Javascript</span><span className="tag-space"></span>
+                                        </div>
                     <div className="user-detail"></div>
                     <div className="user-detail"><button className="connect">Connect</button></div>
                     <div className="user-detail"></div>
@@ -87,7 +109,7 @@ const Users = () => {
 
 
                 <div data-aos="fade-up" className="user">
-                <img src={user} alt="user" className="users-img" />
+                <img src={userPic} alt="user" className="users-img" />
                 <div className="users-container">
                     <div className="user-detail">Name</div>
                     <div className="user-detail">:</div>
@@ -109,7 +131,7 @@ const Users = () => {
                     <div className="user-detail"></div>
                     
                 </div>           
-                </div> */}
+                </div>
             </div>
         </div>
     )

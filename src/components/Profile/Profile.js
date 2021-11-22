@@ -20,6 +20,7 @@ const Profile = async () => {
                 setEmail(res.data.email);
                 setGithub(res.data.github);
                 setTechstack(res.data.techstack);
+                setTags(res.data.tags);
                 setProject(res.data.project);
                 setDescription(res.data.description);
             }
