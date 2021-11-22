@@ -1,0 +1,57 @@
+.testuser {
+    min-height: 100vh;
+    background: linear-gradient(rgba(191, 155, 1905,0.5), rgba(191, 155, 190,0.5)), url('../../images/pic2.jpg') center/cover no-repeat fixed;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    color: white;
+    font-family: 'Electrolize', sans-serif;
+  }
+
+  h2 {
+      display: flex;
+      text-align: center;
+      justify-content: center;
+
+  }
+
+  .testuser-list {
+    margin-top: 50px;
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8));
+    padding: 30px 80px;
+    border-radius: 50px;
+    margin-left: 205px;
+    margin-right: 205px;
+  }
+
+  /* .tag {
+    background-color: red;
+    padding: 6px;
+    border-radius: 5px;
+  } */
+
+  .tag-space {
+    margin: auto 20px;
+  }
+
+  .con-link {
+    color: white;
+  }
+
+  .con-link:hover {
+    color: yellow;
+    text-decoration: underline;
+    transition: all 0.3s linear;
+  }
+
+  .sub-head {
+    margin-right: 10px;
+  }
+
+  @media screen and (max-width: 960px) {
+    .project-list {
+      margin-left: 100px;
+      margin-right: 100px;
+    }
+  }

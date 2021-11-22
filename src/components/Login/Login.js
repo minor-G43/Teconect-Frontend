@@ -63,7 +63,10 @@ class Login extends Component {
             }
           );
 
-          localStorage.setItem("authToken", data.token);
+          if(data.token) {
+            localStorage.setItem("authToken", data.token);
+            
+          }
 
           // history.push("/");
         } catch(err) {
