@@ -34,9 +34,6 @@ class Login extends Component {
     e.preventDefault();
 
     if (this.validateForm()) {
-        let details = {};
-        details["emailid"] = "";
-        details["password"] = "";
 
       //   if (localStorage.getItem("authToken")!=null && localStorage.getItem("authToken")!="") {
       //     // history.push("/");
@@ -51,23 +48,27 @@ class Login extends Component {
           header: {
             "Content-Type": "application/json",
           },
+
+          body: {
+            "email"  : this.state.details["emailid"],
+            "password" : this.state.details["password"]
+          }
         };
 
         try {
+          console.log(config.body);
           const {data} = await axios.post(
             "https://tconectapi.herokuapp.com/api/auth/login",
-            config,
-            {
-              "email"  : details["emailid"],
-              "password" : details["password"]
-            }
+            config
           );
 
           if(data.token) {
-            localStorage.setItem("authToken", data.token);
-            
+            localStorage.setItem("authToken", data.token);  
           }
 
+          alert("Login successful");
+          this.state.details["emailid"] = "";
+          this.state.details["password"] = "";
           // history.push("/");
         } catch(err) {
           alert(err);

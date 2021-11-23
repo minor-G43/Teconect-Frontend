@@ -23,7 +23,7 @@ const TestUser = () => {
     return (
         <div className="testuser">
             
-            {
+            {/* {
                 users.map(user => {
                     return (
                     <div data-aos="fade-up" className="testuser-list">
@@ -57,11 +57,11 @@ const TestUser = () => {
 
                     )
                 })
-            }
+            } */}
 
 
 
-            {/* <div data-aos="fade-up" className="testuser-list">
+            <div data-aos="fade-up" className="testuser-list">
                 <h3>Name</h3> <br />
                 <div className="project-details">
                     <div className="pro-desc"><span className="sub-head">Email:</span>abc@gmail.com </div> <br />
@@ -84,7 +84,32 @@ const TestUser = () => {
                     <Link to='#' className="con-link">Connect <i className="far fa-user"/>+</Link>
 
                 </div>
-            </div> */}
+            </div>
+
+            <div data-aos="fade-up" className="testuser-list">
+                <h3>Name</h3> <br />
+                <div className="project-details">
+                    <div className="pro-desc"><span className="sub-head">Email:</span>abc@gmail.com </div> <br />
+                    <div className="pro-desc"><span className="sub-head">Github:</span> <a href="https://github.com/Anon123" target="_blank">https://github.com/Anon123</a>   </div> <br />
+                    <div className="pro-desc"><span className="sub-head">Tech Stack:</span> Web Development</div> <br />
+                    <div className="pro-desc"><span className="sub-head">Preferred Technologies:</span></div> <br />
+                    <span className="tag" style={{
+                        backgroundColor: randomColor(),
+                        padding: "6px",
+                        fontWeight: 'bold',
+                        borderRadius: "5px"
+                    }}>
+                        Javascript</span><span className="tag-space"></span><span className="tag" style={{
+                        backgroundColor: randomColor(),
+                        padding: "6px",
+                        fontWeight: 'bold',
+                        borderRadius: "5px"
+                    }}>
+                        Javascript</span> <br /><br />
+                    <Link to='#' className="con-link">Connect <i className="far fa-user"/>+</Link>
+
+                </div>
+            </div>
 
             
 

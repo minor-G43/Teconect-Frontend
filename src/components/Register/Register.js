@@ -37,40 +37,28 @@ class Register extends Component {
     // let history = this.props;
 
     if (this.validateForm()) {
-        let details = {};
-        details["username"] = "";
-        details["emailid"] = "";
-        details["password"] = "";
-        // details["confirmpassword"] = "";
-        details["phoneno"] = "";
-        // details["linkedin"] = "";
-        details["github"] = "";
-        details["techstack"] = "";
-        details["tags"] = "";
-        details["project"] = "";
-        details["description"] = "";
-
         const config = {
           header: {
             "Content-Type": "application/json",
           },
+
+          body: {
+            "username" : this.state.details["username"],
+            "email"  : this.state.details["emailid"],
+            "password" : this.state.details["password"],
+            "PhoneNo" : this.state.details["phoneno"],
+            "github" : this.state.details["github"],
+            "techstack" : this.state.details["techstack"],
+            "tags" : this.state.details["tags"],
+            "project" : this.state.details["project"],
+            "description" : this.state.details["description"]
+          }
         };
 
         try {
-          console.log(details);
+          console.log(config.body);
           const { data } = await axios.post(
             "https://tconectapi.herokuapp.com/api/auth/register",
-            {
-              "username" : details["username"],
-              "email"  : details["emailid"],
-              "password" : details["password"],
-              "PhoneNo" : details["phoneno"],
-              "github" : details["github"],
-              "techstack" : details["techstack"],
-              "tags" : details["tags"],
-              "project" : details["project"],
-              "description" : details["description"]
-            },
             config
           );
   
@@ -81,6 +69,16 @@ class Register extends Component {
           //     <Redirect to='/users' />
           //   }
           // }
+          alert("Registered Successfully");
+          this.state.details["username"] = "";
+          this.state.details["emailid"] = "";
+          this.state.details["password"] = "";
+          this.state.details["phoneno"] = "";
+          this.state.details["github"] = "";
+          this.state.details["techstack"] = "";
+          this.state.details["tags"] = "";
+          this.state.details["project"] = "";
+          this.state.details["description"] = "";
     
           // history.push("/");
         } catch (error) {
@@ -125,6 +123,7 @@ class Register extends Component {
     }
 
     if (typeof details["username"] !== "undefined") {
+      console.log(details["username"]);
       if (!(details["username"].length > 3)) {
         validity = false;
         errors["username"] = "*Please enter more than 3 characters";

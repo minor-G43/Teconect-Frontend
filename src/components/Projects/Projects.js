@@ -24,7 +24,7 @@ const Projects = () => {
         <div className="projects">
             <h2 className="project-head">Trending Projects</h2>
 
-            {
+            {/* {
                 projects.map(user => {
                     return (
                     <div data-aos="fade-up" className="project-list" id={user._id}>
@@ -55,10 +55,10 @@ const Projects = () => {
 
                     )
                 })
-            }
+            } */}
 
 
-            {/* <div data-aos="fade-up" className="project-list">
+            <div data-aos="fade-up" className="project-list">
                 <h3>Project Name</h3> <br />
                 <div className="project-details">
                     <div className="pro-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, veniam!</div> <br />
@@ -78,7 +78,29 @@ const Projects = () => {
                     <Link to='#' className="pro-link">View Project</Link>
 
                 </div>
-            </div> */}
+            </div>
+
+            <div data-aos="fade-up" className="project-list">
+                <h3>Project Name</h3> <br />
+                <div className="project-details">
+                    <div className="pro-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, veniam!</div> <br />
+                    <span className="tag" style={{
+                        backgroundColor: randomColor(),
+                        padding: "6px",
+                        fontWeight: 'bold',
+                        borderRadius: "5px"
+                    }}>
+                        Javascript</span><span className="tag-space"></span><span className="tag" style={{
+                        backgroundColor: randomColor(),
+                        padding: "6px",
+                        fontWeight: 'bold',
+                        borderRadius: "5px"
+                    }}>
+                        Javascript</span> <br /><br />
+                    <Link to='#' className="pro-link">View Project</Link>
+
+                </div>
+            </div>
 
             
 
