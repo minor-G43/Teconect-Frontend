@@ -22,7 +22,7 @@ const App = () => {
         <Route path='/register' component={Register} />
         <Route path='/users' component={TestUser} />
         <Route path='/profile' component={Profile} />
-        <Route path='/project' component={Project} />
+        <Route path='/createproject' component={Project} />
         <Route path='/projects' component={Projects} />
         <Route path='/forgotpassword' component={ForgotPassword} />
         <Route path='/resetpassword' component={ResetPassword} />
