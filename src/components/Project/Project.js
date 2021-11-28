@@ -29,16 +29,12 @@ class Project extends Component {
 
   }
 
-  async submitForm(e) {
+   async submitForm(e) {
 
     e.preventDefault();
 
-    if (this.validateForm()) {
-        let details = {};
-        details["pname"] = "";
-        details["project"] = "";
-        details["description"] = "";
-        details["tags"] = "";
+    if (this.validateForm() === true) {
+        
 
         const config = {
           header: {
@@ -47,19 +43,29 @@ class Project extends Component {
         };
 
         try {
-          console.log(details);
-          const { data } = await axios.post(
-            "https://tconectapi.herokuapp.com/api/auth/project",
+          // console.log(this.state.details);
+          const data = await axios.post(
+            `https://tconectapi.herokuapp.com/api/auth/createproject/${localStorage.getItem("authToken")}`,
             {
-              "pname" : details["pname"],
-              "project" : details["project"],
-              "description" : details["description"],
-              "tags" : details["tags"]
+              "pname" : this.state.details["pname"],
+              "project" : this.state.details["project"],
+              "description" : this.state.details["description"],
+              "tags" : this.state.details["tags"]
             },
             config
           );
+          // console.log(data);
+          alert("Project details submitted!")
+          this.state.details["pname"] = "";
+          this.state.details["project"] = "";
+          this.state.details["description"] = "";
+          this.state.details["tags"] = "";
         } catch (error) {
           console.log(error);
+          this.state.details["pname"] = "";
+          this.state.details["project"] = "";
+          this.state.details["description"] = "";
+          this.state.details["tags"] = "";
         }
       }
 
@@ -136,7 +142,7 @@ render() {
 
      <div className="container2">
 
-        <form className="form" method="post" name="Project-Form" onSubmit= {this.submitForm}>
+        <form className="form" method="post" name="Project-Form" onSubmit= {async (e) => await this.submitForm(e)}>
 
             <h2>Project Information</h2>
             

@@ -37,26 +37,24 @@ class Register extends Component {
     // let history = this.props;
 
     if (this.validateForm()) {
-        const config = {
-          header: {
-            "Content-Type": "application/json",
-          },
-
-          body: {
-            "username" : this.state.details["username"],
-            "email"  : this.state.details["emailid"],
-            "password" : this.state.details["password"],
-            "PhoneNo" : this.state.details["phoneno"],
-            "github" : this.state.details["github"],
-            "techstack" : this.state.details["techstack"],
-            "tags" : this.state.details["tags"],
-            "project" : this.state.details["project"],
-            "description" : this.state.details["description"]
-          }
-        };
 
         try {
-          console.log(config.body);
+
+          const config = {
+            body: {
+              "username" : this.state.details["username"],
+              "email"  : this.state.details["emailid"],
+              "password" : this.state.details["password"],
+              "PhoneNo" : this.state.details["phoneno"],
+              "github" : this.state.details["github"],
+              "techstack" : this.state.details["techstack"],
+              "tags" : this.state.details["tags"],
+              "project" : this.state.details["project"],
+              "description" : this.state.details["description"]
+            }
+          };
+          
+          // console.log(config.body);
           const { data } = await axios.post(
             "https://tconectapi.herokuapp.com/api/auth/register",
             config

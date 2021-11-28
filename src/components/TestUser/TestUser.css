@@ -37,9 +37,12 @@
 
   .con-link {
     color: white;
+    background: transparent;
+    border: transparent;
   }
 
   .con-link:hover {
+    cursor: pointer;
     color: yellow;
     text-decoration: underline;
     transition: all 0.3s linear;

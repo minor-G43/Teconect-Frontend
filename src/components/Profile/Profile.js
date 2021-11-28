@@ -4,18 +4,20 @@ import user from '../../images/user.jpg';
 import './Profile.css';
 
 const Profile = async () => {
-    const [username,setUsername]=useState();
-    const [email,setEmail]=useState();
-    const [github,setGithub]=useState();
-    const [techstack,setTechstack]=useState();
-    const [tags,setTags]=useState();
-    const [project,setProject]=useState();
-    const [description,setDescription]=useState();
+    const [id,setId] =  useState();
+    const [username,setUsername] = useState();
+    const [email,setEmail] = useState();
+    const [github,setGithub] = useState();
+    const [techstack,setTechstack] = useState();
+    const [tags,setTags] = useState();
+    const [project,setProject] = useState();
+    const [description,setDescription] = useState();
 
-    useEffect(() => {
-        async function getData() {
+        const getData = async () => {
             if(localStorage.getItem("authToken")!==null && localStorage.getItem("authToken")!=="") {
                 const res = await axios.post(`https://tconectapi.herokuapp.com/api/auth/fetchprofile/${localStorage.getItem("authToken")}`);
+                console.log(res);
+                setId(res.data.id);
                 setUsername(res.data.username);
                 setEmail(res.data.email);
                 setGithub(res.data.github);
@@ -24,10 +26,13 @@ const Profile = async () => {
                 setProject(res.data.project);
                 setDescription(res.data.description);
             }
+
+            if(id)
+            localStorage.setItem("login_id", id);
         }
 
-        getData();
-    });
+        await getData();
+
 
     return (
         <div className="profile">
