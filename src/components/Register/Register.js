@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-import { Redirect } from 'react-router';
 import axios from 'axios';
 import isGitUrl from 'is-git-url';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import '../Login/Login.css';
 
 
@@ -13,7 +12,8 @@ class Register extends Component {
 
     this.state = {
       details: {},
-      errors: {},       
+      errors: {}, 
+      redirect: false      
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -38,10 +38,8 @@ class Register extends Component {
 
     if (this.validateForm()) {
 
-        try {
 
           const config = {
-            body: {
               "username" : this.state.details["username"],
               "email"  : this.state.details["emailid"],
               "password" : this.state.details["password"],
@@ -51,14 +49,21 @@ class Register extends Component {
               "tags" : this.state.details["tags"],
               "project" : this.state.details["project"],
               "description" : this.state.details["description"]
-            }
+            
           };
           
           // console.log(config.body);
-          const { data } = await axios.post(
+          axios
+          .post(
             "https://tconectapi.herokuapp.com/api/auth/register",
             config
-          );
+          )
+          .then(res => {
+            console.log(res.data);
+            localStorage.setItem("authToken", res.data.token);
+          })
+          .catch (error => console.log(error))
+          
   
           // if(data.success === true) {
           //   const loginToken = await axios.post(`https://tconectapi.herokuapp.com/api/auth/login/${data.token}`);
@@ -79,9 +84,7 @@ class Register extends Component {
           this.state.details["description"] = "";
     
           // history.push("/");
-        } catch (error) {
-          console.log(error);
-        }
+         
 
         // fetch("http://localhost:5000/api/auth/register" , {
         //   method : "post", 
@@ -121,24 +124,23 @@ class Register extends Component {
     }
 
     if (typeof details["username"] !== "undefined") {
-      console.log(details["username"]);
       if (!(details["username"].length > 3)) {
         validity = false;
         errors["username"] = "*Please enter more than 3 characters";
       }
     }
 
-    // if (!details["username"]) {
-    //   validity = false;
-    //   errors["username"] = "*Please enter your Username";
-    // }
+    if (!details["description"]) {
+      validity = false;
+      errors["description"] = "*Please enter Description";
+    }
 
-    // if (typeof details["username"] !== "undefined") {
-    //   if (!(details["username"].length > 5)) {
-    //     validity = false;
-    //     errors["username"] = "*Please enter more than 5 characters";
-    //   }
-    // }
+    if (typeof details["description"] !== "undefined") {
+      if (!(details["description"].length > 3)) {
+        validity = false;
+        errors["description"] = "*Please enter more than 4 characters";
+      }
+    }
 
     if (!details["emailid"]) {
       validity = false;
@@ -177,20 +179,6 @@ class Register extends Component {
         errors["confirmpassword"] = "*Passwords do not match";
       }
     }
-
-    // if (!details["linkedin"]) {
-    //   validity = false;
-    //   errors["linkedin"] = "*Please enter your Linkedin account URL";
-    // }
-
-    // if (typeof details["linkedin"] !== "undefined") {
-
-    //   let pattern = new RegExp(/(https?)?:?(\/\/)?(([w]{3}||\w\w)\.)?linkedin.com(\w+:{0,1}\w*@)?(\S+)(:([0-9])+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/);
-    //   if (!pattern.test(details["linkedin"])) {
-    //     validity = false;
-    //     errors["linkedin"] = "*Please enter a valid Linkedin account";
-    //   }
-    // }
 
     if (!details["phoneno"]) {
       validity = false;
@@ -285,15 +273,15 @@ render() {
                 <small className="errorMsg">{this.state.errors.name}</small>
             </div>
             
-            {/* <div className="control">
-                <label htmlFor = "username">Username</label>
+            <div className="control">
+                <label htmlFor = "description">Description</label>
                 <input type="text" 
-                name = "username" 
-                value={this.state.details.username} 
-                placeholder="Enter Your Username" 
+                name = "description" 
+                value={this.state.details.description} 
+                placeholder="Enter Your Description" 
                 onChange={this.handleChange} />
-                <small className="errorMsg">{this.state.errors.username}</small>
-            </div> */}
+                <small className="errorMsg">{this.state.errors.description}</small>
+            </div>
 
             <div className="control">
                 <label htmlFor = "email">Email</label>
@@ -391,16 +379,6 @@ render() {
                 placeholder="Enter Your Project URL" 
                 onChange={this.handleChange} />
                 <small className="errorMsg">{this.state.errors.project}</small>
-            </div>
-
-            <div className="control">
-                <label htmlFor = "description">Description About Project (optional)</label>
-                <input type="text" 
-                name = "description" 
-                value={this.state.details.description} 
-                placeholder="Enter Your Project Description" 
-                onChange={this.handleChange} />
-                <small className="errorMsg">{this.state.errors.description}</small>
             </div>
 
             <div className="control">

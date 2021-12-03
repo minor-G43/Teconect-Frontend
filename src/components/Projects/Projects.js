@@ -6,20 +6,38 @@ import randomColor from "randomcolor";
 import './Projects.css';
 import axios from 'axios';
 
-const Projects = async () => {
+const Projects = () => {
 
     const [projects,setProjects]=useState ([]);
-    
-    const getProjects = async () => {
-        const res = await axios.post(`https://tconectapi.herokuapp.com/api/auth/fetchproject/${localStorage.getItem("authToken")}`);
-        // console.log(res);
-        setProjects(res);
-    }
 
-    await getProjects();
     useEffect(() => {
         Aos.init({duration: 2000});
-    });
+    },[]);
+    
+    async function getProjects() {
+        try {
+            const res = await axios.post(`https://tconectapi.herokuapp.com/api/auth/fetchproject/${localStorage.getItem("authToken")}`);
+            console.log(res);
+            let newProject = [];
+            res.data.data.forEach((user) => {
+                newProject.push({
+                id: user._id,
+                title: user.title,
+                description: user.description,
+                url: user.url,
+                tags: user.tags
+            })
+            // console.log(newData);
+        });
+            setProjects(newProject);
+
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+    getProjects();
+    
 
     return (
         <div className="projects">
@@ -28,7 +46,7 @@ const Projects = async () => {
             {
                 projects.map(user => {
                     return (
-                    <div data-aos="fade-up" className="project-list" id={user._id}>
+                    <div data-aos="fade-up" className="project-list" key={user._id}>
                         <h3>{user.title}</h3> <br />
                         <div className="project-details">
                             <div className="pro-desc">{user.description}</div> <br />
@@ -36,20 +54,20 @@ const Projects = async () => {
                             {
                                 user.tags.map(tag => {
                                     return (
-                                    <div>
-                                    <span className="tag" style={{
-                                        backgroundColor: randomColor(),
-                                        padding: "6px",
-                                        fontWeight: 'bold',
-                                        borderRadius: "5px"
-                                    }}>
-                                        {tag}</span><span className="tag-space"></span>
-                                    </div>
+                                        <>
+                                        <span className="tag" style={{
+                                            backgroundColor: randomColor(),
+                                            padding: "6px",
+                                            fontWeight: 'bold',
+                                            borderRadius: "5px"
+                                        }}>
+                                            {tag}</span><span className="tag-space"></span>
+                                        </>
                                     )
                                 })
                             }
                             <br /><br />
-                            <Link to={user.url} className="pro-link">View Project</Link>
+                            <a href={user.url} className="pro-link" target="_blank">View Project</a>
 
                         </div>
                     </div>
@@ -60,44 +78,44 @@ const Projects = async () => {
 
 
             {/* <div data-aos="fade-up" className="project-list">
-                <h3>Project Name</h3> <br />
+                <h3>DevChat</h3> <br />
                 <div className="project-details">
-                    <div className="pro-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, veniam!</div> <br />
+                    <div className="pro-desc">A chatting web app made with React and Firebase</div> <br />
                     <span className="tag" style={{
                         backgroundColor: randomColor(),
                         padding: "6px",
                         fontWeight: 'bold',
                         borderRadius: "5px"
                     }}>
-                        Javascript</span><span className="tag-space"></span><span className="tag" style={{
+                        React js</span><span className="tag-space"></span><span className="tag" style={{
                         backgroundColor: randomColor(),
                         padding: "6px",
                         fontWeight: 'bold',
                         borderRadius: "5px"
                     }}>
-                        Javascript</span> <br /><br />
+                        Node js</span> <br /><br />
                     <Link to='#' className="pro-link">View Project</Link>
 
                 </div>
             </div>
 
             <div data-aos="fade-up" className="project-list">
-                <h3>Project Name</h3> <br />
+                <h3>We Conference</h3> <br />
                 <div className="project-details">
-                    <div className="pro-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, veniam!</div> <br />
+                    <div className="pro-desc">A video conferencing app</div> <br />
                     <span className="tag" style={{
                         backgroundColor: randomColor(),
                         padding: "6px",
                         fontWeight: 'bold',
                         borderRadius: "5px"
                     }}>
-                        Javascript</span><span className="tag-space"></span><span className="tag" style={{
+                        MERN Stack</span><span className="tag-space"></span><span className="tag" style={{
                         backgroundColor: randomColor(),
                         padding: "6px",
                         fontWeight: 'bold',
                         borderRadius: "5px"
                     }}>
-                        Javascript</span> <br /><br />
+                        Firebase</span> <br /><br />
                     <Link to='#' className="pro-link">View Project</Link>
 
                 </div>

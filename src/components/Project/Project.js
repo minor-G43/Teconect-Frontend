@@ -37,38 +37,28 @@ class Project extends Component {
         
 
         const config = {
-          header: {
-            "Content-Type": "application/json",
-          },
+          "title" : this.state.details["title"],
+          "url" : this.state.details["url"],
+          "des" : this.state.details["des"],
+          "tags" : this.state.details["tags"]
         };
 
         try {
-          // console.log(this.state.details);
-          const data = await axios.post(
+          console.log(this.state.details);
+          const {data} = await axios.post(
             `https://tconectapi.herokuapp.com/api/auth/createproject/${localStorage.getItem("authToken")}`,
-            {
-              "pname" : this.state.details["pname"],
-              "project" : this.state.details["project"],
-              "description" : this.state.details["description"],
-              "tags" : this.state.details["tags"]
-            },
-            config
+             config
           );
-          // console.log(data);
-          alert("Project details submitted!")
-          this.state.details["pname"] = "";
-          this.state.details["project"] = "";
-          this.state.details["description"] = "";
-          this.state.details["tags"] = "";
+          console.log(data);
+          alert("Project details submitted!");
         } catch (error) {
           console.log(error);
-          this.state.details["pname"] = "";
-          this.state.details["project"] = "";
-          this.state.details["description"] = "";
-          this.state.details["tags"] = "";
         }
       }
 
+      this.setState({
+        details: {}
+      });
   }
 
   validateForm() {
@@ -77,27 +67,27 @@ class Project extends Component {
     let errors = {};
     let validity = true;
 
-    if (!details["pname"]) {
+    if (!details["title"]) {
       validity = false;
-      errors["pname"] = "*Please enter your Project Name";
+      errors["title"] = "*Please enter your Project Name";
     }
 
-    if (typeof details["pname"] !== "undefined") {
-      if (!(details["pname"].length > 4)) {
+    if (typeof details["title"] !== "undefined") {
+      if (!(details["title"].length > 4)) {
         validity = false;
-        errors["pname"] = "*Please enter more than 3 characters";
+        errors["title"] = "*Please enter more than 3 characters";
       }
     }
 
-    if (!details["description"]) {
+    if (!details["des"]) {
         validity = false;
-        errors["description"] = "*Please enter your Project Name";
+        errors["description"] = "*Please enter your Project Description";
       }
   
-      if (typeof details["description"] !== "undefined") {
-        if (!(details["description"].length > 4)) {
+      if (typeof details["des"] !== "undefined") {
+        if (!(details["des"].length > 4)) {
           validity = false;
-          errors["description"] = "*Please enter more than 3 characters";
+          errors["des"] = "*Please enter more than 3 characters";
         }
       }
 
@@ -113,17 +103,17 @@ class Project extends Component {
       }
     }
 
-    if (!details["project"]) {
+    if (!details["url"]) {
       validity = false;
-      errors["project"] = "*Please enter Project URL";
+      errors["url"] = "*Please enter Project URL";
     }
 
-    if (typeof details["project"] !== "undefined") {
+    if (typeof details["url"] !== "undefined") {
 
       let pattern = new RegExp('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?');
-      if (!pattern.test(details["project"])) {
+      if (!pattern.test(details["url"])) {
         validity = false;
-        errors["project"] = "*Please enter a valid Project URL";
+        errors["url"] = "*Please enter a valid Project URL";
       }
     }
 
@@ -142,35 +132,35 @@ render() {
 
      <div className="container2">
 
-        <form className="form" method="post" name="Project-Form" onSubmit= {async (e) => await this.submitForm(e)}>
+        <form className="form" method="post" name="Project-Form" onSubmit= {(e) => this.submitForm(e)}>
 
             <h2>Project Information</h2>
             
             <div className="control">
-                <label htmlFor = "pname">Project Name</label>
+                <label htmlFor = "title">Project Name</label>
                 <input type="text" 
-                name = "pname" 
-                value={this.state.details.pname} 
+                name = "title" 
+                value={this.state.details.title} 
                 placeholder="Enter Your Project Name" 
                 onChange={this.handleChange} />
-                <small className="errorMsg">{this.state.errors.pname}</small>
+                <small className="errorMsg">{this.state.errors.title}</small>
             </div>
 
             <div className="control">
-                <label htmlFor = "project">Project URL</label>
+                <label htmlFor = "url">Project URL</label>
                 <input type="url" 
-                name = "project" 
-                value={this.state.details.project} 
+                name = "url" 
+                value={this.state.details.url} 
                 placeholder="Enter Your Project URL" 
                 onChange={this.handleChange} />
                 <small className="errorMsg">{this.state.errors.project}</small>
             </div>
 
             <div className="control">
-                <label htmlFor = "description">Description About Project</label>
+                <label htmlFor = "des">Description About Project</label>
                 <input type="text" 
-                name = "description" 
-                value={this.state.details.description} 
+                name = "des" 
+                value={this.state.details.des} 
                 placeholder="Enter Your Project Description" 
                 onChange={this.handleChange} />
                 <small className="errorMsg">{this.state.errors.description}</small>
