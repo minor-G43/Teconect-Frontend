@@ -16,7 +16,7 @@ const Private = () => {
     // };
 
     try {
-      if(localStorage.getItem("authToken")!==null && localStorage.getItem("authToken")!=="") {
+      if(localStorage.getItem("authToken")!==null || localStorage.getItem("authToken")!=="") {
         const loginToken = await axios.post(`https://tconectapi.herokuapp.com/api/auth/login/${localStorage.getItem("authToken")}`);
         // console.log(loginToken);
         if(loginToken.data.success===true) {
@@ -39,7 +39,7 @@ const Private = () => {
   return error ? (
     <span className="error-message">{error}</span>
   ) : (
-    <div>{privateData}</div>
+    <Redirect to='/users' />
   );
 };
 

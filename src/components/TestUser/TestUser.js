@@ -7,23 +7,45 @@ import randomColor from "randomcolor";
 import './TestUser.css';
 import axios from 'axios';
 
-const TestUser = async () => {
-    // console.log(db);
+// async add krdena
+const TestUser = () => {
 
-    const [users,setUser] = ([]);
-
+    let [users,setUsers] = useState([]);
     const db = firebase.firestore();
     const login_id = localStorage.getItem("login_id"); 
     const userRef = db.collection(`${login_id}`).doc("collection");
 
+    useEffect(() => {
+        Aos.init({duration: 2000})
+    },[])
+        async function getData() {
+            try {
+                const res = await axios.post(`https://tconectapi.herokuapp.com/api/auth/userlist/${localStorage.getItem("authToken")}`);
+                // console.log(res.data.data);
+                let newData = [];
+                // const userData = res.data.data;
+                res.data.data.forEach((user) => {
+                    newData.push({
+                    id: user._id,
+                    username: user.username,
+                    description: user.description,
+                    email: user.email,
+                    github: user.github,
+                    techStack: user.techStack,
+                    tags: user.tags
+                })
+                // console.log(newData);
+            });
+    
+                setUsers(newData);
+            } catch(err) {
+                console.log(err);
+            }
+        }
 
-    const getUser = async () => {
-        const res = await axios.post(`https://tconectapi.herokuapp.com/api/auth/userlist/${localStorage.getItem("authToken")}`);
-        // console.log(res);
-        setUser(res);
-    }
+        getData();
+    
 
-    await getUser();
 
     const connectUser = async (id) => {
         const reqRef = db.collection(`${id}`).doc("collection");
@@ -38,16 +60,6 @@ const TestUser = async () => {
 
     }
 
-    // const fetchData = async () => {
-    //     const userRef = db.collection(login_id).
-    // }
-
-
-    // fetchData();
-
-    useEffect(() => {
-        Aos.init({duration: 2000});
-    });
 
     return (
         <div className="testuser">
@@ -55,12 +67,13 @@ const TestUser = async () => {
             {
                 users.map(user => {
                     return (
-                    <div data-aos="fade-up" className="testuser-list" id={user._id}>
+                    <div data-aos="fade-up" className="testuser-list" key={user.id}>
                         <h3>{user.username}</h3> <br />
                         <div className="project-details">
+                            <div className="pro-desc"><span className="sub-head">Description:</span> {user.description}</div> <br />
                             <div className="pro-desc"><span className="sub-head">Email:</span> {user.email}</div> <br />
                             <div className="pro-desc"><span className="sub-head">Github:</span> <a href={user.github} target="_blank">{user.github}</a>   </div> <br />
-                            <div className="pro-desc"><span className="sub-head">Tech Stack:</span> </div> {user.techstack}<br />
+                            <div className="pro-desc"><span className="sub-head">Tech Stack:</span> </div> {user.techStack} <br /><br />
                             <div className="pro-desc"><span className="sub-head">Preferred Technologies:</span></div> <br />
 
                             {
@@ -79,7 +92,7 @@ const TestUser = async () => {
                                 })
                             }
                             <br /><br />
-                            <button className="con-link" onClick={async () => await connectUser(user._id)}>Connect <i className="far fa-user"/>+</button>
+                            <button className="con-link" onClick={async () => await connectUser(user.id)}>Connect <i className="far fa-user"/>+</button>
 
                         </div>
                     </div>
@@ -91,9 +104,10 @@ const TestUser = async () => {
 
 
             {/* <div data-aos="fade-up" className="testuser-list">
-                <h3>Name</h3> <br />
+                <h3>Abhir</h3> <br />
                 <div className="project-details">
-                    <div className="pro-desc"><span className="sub-head">Email:</span>abc@gmail.com </div> <br />
+                <div className="pro-desc"><span className="sub-head">Description:</span>I am a full stack developer and ML enthusiast. </div> <br />
+                    <div className="pro-desc"><span className="sub-head">Email:</span>abhir@gmail.com </div> <br />
                     <div className="pro-desc"><span className="sub-head">Github:</span> <a href="https://github.com/Anon123" target="_blank">https://github.com/Anon123</a>   </div> <br />
                     <div className="pro-desc"><span className="sub-head">Tech Stack:</span> Web Development</div> <br />
                     <div className="pro-desc"><span className="sub-head">Preferred Technologies:</span></div> <br />
@@ -116,9 +130,10 @@ const TestUser = async () => {
             </div>
 
             <div data-aos="fade-up" className="testuser-list">
-                <h3>Name</h3> <br />
+                <h3>Somya</h3> <br />
                 <div className="project-details">
-                    <div className="pro-desc"><span className="sub-head">Email:</span>abc@gmail.com </div> <br />
+                    <div className="pro-desc"><span className="sub-head">Description:</span>I am a full stack web developer and freelancer </div> <br />
+                    <div className="pro-desc"><span className="sub-head">Email:</span>somya@gmail.com </div> <br />
                     <div className="pro-desc"><span className="sub-head">Github:</span> <a href="https://github.com/Anon123" target="_blank">https://github.com/Anon123</a>   </div> <br />
                     <div className="pro-desc"><span className="sub-head">Tech Stack:</span> Web Development</div> <br />
                     <div className="pro-desc"><span className="sub-head">Preferred Technologies:</span></div> <br />

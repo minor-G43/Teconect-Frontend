@@ -1,4 +1,4 @@
-.testuser {
+.testuser, .requests, .testprofile {
     min-height: 100vh;
     background: linear-gradient(rgba(191, 155, 1905,0.5), rgba(191, 155, 190,0.5)), url('../../images/pic2.jpg') center/cover no-repeat fixed;
     display: flex;
@@ -9,11 +9,14 @@
     font-family: 'Electrolize', sans-serif;
   }
 
+  .project-head {
+    margin-top: 50px;
+  }
+
   h2 {
       display: flex;
       text-align: center;
       justify-content: center;
-
   }
 
   .testuser-list {
@@ -46,6 +49,34 @@
     color: yellow;
     text-decoration: underline;
     transition: all 0.3s linear;
+  }
+
+  .con-link.accept {
+    margin-right: 7px;
+  }
+
+  .con-link.accept:hover {
+    cursor: pointer;
+    color: green;
+    text-decoration: underline;
+    transition: all 0.3s linear;
+  }
+
+  .con-link.cancel {
+    margin-left: 7px;
+  }
+
+  .con-link.cancel:hover {
+    cursor: pointer;
+    color: red;
+    text-decoration: underline;
+    transition: all 0.3s linear;
+  }
+
+  .user-image {
+    border-radius: 90px;
+    height: 166px;
+    width: 177px;
   }
 
   .sub-head {

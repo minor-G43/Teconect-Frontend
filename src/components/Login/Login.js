@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-// import { Redirect } from 'react-router';
 import axios from "axios";
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import './Login.css';
 
 
@@ -45,57 +44,33 @@ class Login extends Component {
       // }
 
         const config = {
-          header: {
-            "Content-Type": "application/json",
-          },
-
-          body: {
-            "email"  : this.state.details["emailid"],
+            "email"  : this.state.details["email"],
             "password" : this.state.details["password"]
-          }
         };
 
         try {
-          console.log(config.body);
+          // console.log(config);
           const {data} = await axios.post(
             "https://tconectapi.herokuapp.com/api/auth/login",
             config
           );
-
+          console.log(data);
           if(data.token) {
             localStorage.setItem("authToken", data.token);  
           }
 
           alert("Login successful");
-          this.state.details["emailid"] = "";
-          this.state.details["password"] = "";
-          // history.push("/");
+          this.setState({
+            redirect: true
+          });
         } catch(err) {
           alert(err);
         }
-
-        // fetch("http://localhost:5000/api/auth/login" , {
-        //   method : "post",
-        //   header: {
-        //     "Content-Type": "application/json",
-        //   }, 
-        //   body :{
-        //     "email"  : details["emailid"],
-        //     "password" : details["password"]
-        //   }
-        // }).then(res=>{
-        //   if(res.status === 200 || res.status  === 201){
-        //     this.setState({details:details});
-        //     alert("You have been logged in successfully!"); 
-        //     this.setState({redirect: true});
-        //   }
-        //   else{
-        //     alert(res.statusText);
-        //   }
-        // }).catch( err =>{
-        //   alert(err);
-        // }) 
+ 
       }
+      this.setState({
+        details: {}
+      });
 
   }
 
@@ -105,17 +80,17 @@ class Login extends Component {
     let errors = {};
     let validity = true;
 
-    if (!details["emailid"]) {
+    if (!details["email"]) {
       validity = false;
-      errors["emailid"] = "*Please enter your Email ID";
+      errors["email"] = "*Please enter your Email ID";
     }
 
-    if (typeof details["emailid"] !== "undefined") {
+    if (typeof details["email"] !== "undefined") {
 
       let pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
-      if (!pattern.test(details["emailid"])) {
+      if (!pattern.test(details["email"])) {
         validity = false;
-        errors["emailid"] = "*Please enter valid Email ID";
+        errors["email"] = "*Please enter valid Email ID";
       }
     }
 
@@ -146,18 +121,18 @@ render() {
 
      <div className="container">
 
-        <form className="form" method="post" name="Login-Form" onSubmit= {this.submitForm}>
+        <form className="form" method="post" name="Login-Form" onSubmit= {(e) => this.submitForm(e)}>
 
             <h2>Teconect Login</h2>
 
             <div className="control">
                 <label htmlFor = "email">Email</label>
                 <input type="text" 
-                name = "emailid" 
-                value={this.state.details.emailid}  
+                name = "email" 
+                value={this.state.details.email}  
                 placeholder="Enter Email" 
                 onChange={this.handleChange} />
-                <small className="errorMsg">{this.state.errors.emailid}</small>
+                <small className="errorMsg">{this.state.errors.email}</small>
             </div>
 
             <div className="control">
@@ -180,6 +155,7 @@ render() {
 
             <input type="submit" className="button"  value="Login" />
         </form>
+        {this.state.redirect===true ? <Redirect to="/users" /> : ''}
     </div>
   </div>
 
