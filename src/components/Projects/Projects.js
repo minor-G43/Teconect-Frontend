@@ -12,31 +12,32 @@ const Projects = () => {
 
     useEffect(() => {
         Aos.init({duration: 2000});
+        
+        const getProjects = async () => {
+            try {
+                const res = await axios.post(`https://tconectapi.herokuapp.com/api/auth/fetchproject/${localStorage.getItem("authToken")}`);
+                console.log(res);
+                let newProject = [];
+                res.data.data.forEach((user) => {
+                    newProject.push({
+                    id: user._id,
+                    title: user.title,
+                    description: user.description,
+                    url: user.url,
+                    tags: user.tags
+                })
+                // console.log(newData);
+            });
+                setProjects(newProject);
+    
+            } catch(err) {
+                console.log(err);
+            }
+        }
+    
+        getProjects();
     },[]);
     
-    async function getProjects() {
-        try {
-            const res = await axios.post(`https://tconectapi.herokuapp.com/api/auth/fetchproject/${localStorage.getItem("authToken")}`);
-            console.log(res);
-            let newProject = [];
-            res.data.data.forEach((user) => {
-                newProject.push({
-                id: user._id,
-                title: user.title,
-                description: user.description,
-                url: user.url,
-                tags: user.tags
-            })
-            // console.log(newData);
-        });
-            setProjects(newProject);
-
-        } catch(err) {
-            console.log(err);
-        }
-    }
-
-    getProjects();
     
 
     return (

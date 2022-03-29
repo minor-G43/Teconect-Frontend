@@ -17,8 +17,8 @@ const TestUser = () => {
 
     useEffect(() => {
         Aos.init({duration: 2000})
-    },[])
-        async function getData() {
+
+        const getData = async () => {
             try {
                 const res = await axios.post(`https://tconectapi.herokuapp.com/api/auth/userlist/${localStorage.getItem("authToken")}`);
                 // console.log(res.data.data);
@@ -42,14 +42,16 @@ const TestUser = () => {
                 console.log(err);
             }
         }
-
+    
         getData();
+    },[])
+    
     
 
 
     const connectUser = async (id) => {
-        const reqRef = db.collection(`${id}`).doc("collection");
-        console.log(reqRef);
+        const reqRef = db.collection(id).doc("collection");
+        
         userRef.update({
             outreq: firebase.firestore.FieldValue.arrayUnion(`${id}`)
         });
@@ -65,7 +67,7 @@ const TestUser = () => {
         <div className="testuser">
             
             {
-                users.map(user => {
+                users.filter(fil => fil.id !== login_id).map(user => {
                     return (
                     <div data-aos="fade-up" className="testuser-list" key={user.id}>
                         <h3>{user.username}</h3> <br />
