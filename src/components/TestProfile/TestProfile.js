@@ -7,46 +7,45 @@ import randomColor from "randomcolor";
 import '../TestUser/TestUser.css';
 import axios from 'axios';
 
-const TestProfile = async () => {
+const TestProfile = () => {
 
-    let details;
+    let [details,setDetails] = useState({});
     let tags = [];
 
-        async function getProfile() {
-            try {
-                const res = await axios.post(`https://tconectapi.herokuapp.com/api/auth/fetchprofile/${localStorage.getItem("authToken")}`);
-                // console.log(res.data.data);
-                if(res.data.data._id)
-                localStorage.setItem("login_id", res.data.data._id);
-                // const userData = res.data.data;
-                details = {
-                    id: res.data.data._id,
-                    username: res.data.data.username,
-                    description: res.data.data.description,
-                    email: res.data.data.email,
-                    PhoneNo: res.data.data.PhoneNo,
-                    techStack: res.data.data.techStack,
-                    github: res.data.data.github,
-                    project: res.data.data.project
-                }
+    useEffect(() => {
 
-                res.data.data.tags.forEach(tag => {
-                    tags.push(tag);
-                })
+        axios.post(`https://tconectapi.herokuapp.com/api/auth/fetchprofile/${localStorage.getItem("authToken")}`)
+        .then(res => {
+            console.log("response",res);
+            if(res.data.data._id)
+            localStorage.setItem("login_id", res.data.data._id);
+            // const userData = res.data.data;
+            setDetails({
+                id: res.data.data._id,
+                username: res.data.data.username,
+                description: res.data.data.description,
+                email: res.data.data.email,
+                PhoneNo: res.data.data.PhoneNo,
+                techStack: res.data.data.techStack,
+                github: res.data.data.github,
+                project: res.data.data.project
+            })
+    
+            res.data.data.tags.forEach(tag => {
+                tags.push(tag);
+            })
+    
+            console.log(details.username);
+    
+        })
+    })
 
-                console.log(details);
-            } catch(err) {
-                console.log(err);
-            }
-        }
-
-        await getProfile();
-
+        
 
     return (
         <div className="testprofile">
             <h2 className="project-head">Profile</h2>
-            {/* {
+            {
                     <div className="testuser-list" key={details.id}>
                         <img src={user} alt="user" className="user-image" /> <br /><br /><br />
                         <div className="project-details">
@@ -54,9 +53,9 @@ const TestProfile = async () => {
                             <div className="pro-desc"><span className="sub-head">Description:</span> {details.description}</div> <br />
                             <div className="pro-desc"><span className="sub-head">Email:</span> {details.email}</div> <br />
                             <div className="pro-desc"><span className="sub-head">Phone Number:</span> {details.PhoneNo}</div> <br />
-                            <div className="pro-desc"><span className="sub-head">Tech Stack:</span> </div> {details.techstack}<br />
+                            <div className="pro-desc"><span className="sub-head">Tech Stack:</span> {details.techStack}</div><br />
                             <div className="pro-desc"><span className="sub-head">Github:</span> <a href={details.github} target="_blank">{details.github}</a>   </div> <br />
-                            <div className="pro-desc"><span className="sub-head">Project URL:</span> </div> {details.project}<br />
+                            <div className="pro-desc"><span className="sub-head">Project URL:</span> <a href={details.project} target="_blank">{details.project}</a>   </div><br />
                             <div className="pro-desc"><span className="sub-head">Preferred Technologies:</span></div> <br />
 
                             {
@@ -77,9 +76,9 @@ const TestProfile = async () => {
                             <br /><br />
                         </div>
                     </div>
-            } */}
+            }
 
-                        <div className="testuser-list">
+                        {/* <div className="testuser-list">
                         <img src={user} alt="user" className="user-image" /> <br /><br /><br />
                         <div className="project-details">
                         <div className="pro-desc"><span className="sub-head">Name:</span> Megha</div> <br />
@@ -109,7 +108,7 @@ const TestProfile = async () => {
                     
                             <br /><br />
                         </div>
-                    </div>
+                    </div> */}
 
 
          
